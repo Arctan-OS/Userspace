@@ -10,11 +10,7 @@ CPPFLAGS := $(CPPFLAG_DEBUG) $(CPPFLAG_E9HACK) $(CPP_DEBUG_FLAG) $(CPP_E9HACK_FL
 
 export CPPFLAGS
 
-CFLAGS := -c -m64 -c -masm=intel -fno-stack-protector -fno-stack-check \
-		  -fno-lto -mno-mmx -mno-80387 -mno-red-zone -Wall \
-		  -Wextra -mno-sse -mno-sse2 -ffreestanding -nostdlib \
-		  -fPIE -ffunction-sections -march=x86-64-v2
-
+CFLAGS := -c -m64 -masm=intel
 export CFLAGS
 
 LDFLAGS := -Tlinker.ld -melf_x86_64 --no-dynamic-linker -static -pie -o $(PRODUCT)
@@ -29,7 +25,8 @@ OFILES := $(CFILES:.c=.o) $(ASFILES:.asm=.o)
 
 .PHONY: all
 all: build
-	$(LD) $(LDFLAGS) $(shell find . -type f -name "*.o")
+	$(CC) -static -no-pie -lrt -lc $(CFILES) -o $(PRODUCT)
+#	$(LD) $(LDFLAGS) $(shell find . -type f -name "*.o")
 
 .PHONY: arch-x86-64
 arch-x86-64:
@@ -37,7 +34,7 @@ arch-x86-64:
 
 .PHONY: build
 build: pre-build
-	$(MAKE) $(OFILES)
+#	$(MAKE) $(OFILES)
 
 .PHONY: pre-build
 pre-build: clean
