@@ -1,4 +1,4 @@
-PRODUCT := $(ARC_ROOT)/initramfs-constant/userspace.elf
+PRODUCT := $(ARC_INITRAMFS)/userspace.elf
 
 ifeq (,$(ARC_ROOT))
 	ARC_ROOT := .
