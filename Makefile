@@ -26,6 +26,7 @@ OFILES := $(CFILES:.c=.o) $(ASFILES:.asm=.o)
 .PHONY: all
 all: build
 	$(CC) -static -no-pie -lrt -lc $(CFILES) -o $(PRODUCT)
+	$(STRIP) $(PRODUCT)
 #	$(LD) $(LDFLAGS) $(shell find . -type f -name "*.o")
 
 .PHONY: arch-x86-64
